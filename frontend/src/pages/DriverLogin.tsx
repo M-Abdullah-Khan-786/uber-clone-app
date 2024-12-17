@@ -57,7 +57,7 @@ const DriverLogin = () => {
           </button>
           <p className="text-center">
             New here?{" "}
-            <Link to="/user-signup" className="text-blue-600">
+            <Link to="/driver-signup" className="text-blue-600">
               Register as a Driver
             </Link>
           </p>
