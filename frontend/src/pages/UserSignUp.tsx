@@ -1,26 +1,43 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useAppSelector, useAppDispatch } from "../app/hook";
+import { createUser } from "../app/features/user/userSlice";
 
 const UserSignUp = () => {
-  const [formValues, setformValues] = useState({
-    firstname:"",
-    lastname:"",
+  const dispatch = useAppDispatch();
+  const { status, error, message } = useAppSelector((state) => state.user);
+
+  const [formValues, setFormValues] = useState({
+    firstname: "",
+    lastname: "",
     email: "",
     password: "",
   });
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setformValues({ ...formValues, [name]: value });
+    setFormValues({ ...formValues, [name]: value });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formValues);
+    await dispatch(createUser(formValues));
   };
+
+  useEffect(() => {
+    if (status === "idle" && message) {
+      toast.success(message);
+    }
+    if (status === "failed" && error) {
+      toast.error(error);
+    }
+  }, [status, error, message]);
 
   return (
     <div className="p-7 h-screen flex flex-col justify-between">
+      <ToastContainer />
       <div>
         <img
           className="w-24 mb-10"
@@ -28,33 +45,30 @@ const UserSignUp = () => {
           alt="uber"
         />
         <form onSubmit={handleSubmit}>
-        <h3 className="text-lg font-medium mb-2">What's your Name</h3>
+          <h3 className="text-lg font-medium mb-2">What's your Name</h3>
           <div className="flex gap-5 mb-5">
-          <input
-            className="bg-[#eeeeee] rounded px-4 py-2 w-1/2 border text-lg placeholder:text-base"
-            value={formValues.firstname}
-            name="firstname"
-            required
-            type="text"
-            placeholder="First Name"
-            onChange={handleInputChange}
-          />
-          <input
-            className="bg-[#eeeeee] rounded px-4 py-2 w-1/2 border text-lg placeholder:text-base"
-            value={formValues.lastname}
-            name="lastname"
-            required
-            type="text"
-            placeholder="Last Name"
-            onChange={handleInputChange}
-          />
+            <input
+              className="bg-[#eeeeee] rounded px-4 py-2 w-1/2 border text-lg placeholder:text-base"
+              value={formValues.firstname}
+              name="firstname"
+              type="text"
+              placeholder="First Name"
+              onChange={handleInputChange}
+            />
+            <input
+              className="bg-[#eeeeee] rounded px-4 py-2 w-1/2 border text-lg placeholder:text-base"
+              value={formValues.lastname}
+              name="lastname"
+              type="text"
+              placeholder="Last Name"
+              onChange={handleInputChange}
+            />
           </div>
           <h3 className="text-lg font-medium mb-2">What's your email</h3>
           <input
             className="bg-[#eeeeee] mb-5 rounded px-4 py-2 w-full border text-lg placeholder:text-base"
             value={formValues.email}
             name="email"
-            required
             type="email"
             placeholder="example@gmail.com"
             onChange={handleInputChange}
@@ -62,7 +76,6 @@ const UserSignUp = () => {
           <h3 className="text-lg font-medium mb-2">What's your password</h3>
           <input
             className="bg-[#eeeeee] mb-5 rounded px-4 py-2 w-full border text-lg placeholder:text-base"
-            required
             value={formValues.password}
             name="password"
             type="password"
@@ -72,13 +85,14 @@ const UserSignUp = () => {
           <button
             type="submit"
             className="bg-[#111] text-white font-semibold mb-3 rounded px-4 py-2 w-full text-lg placeholder:text-base"
+            disabled={status === "loading"}
           >
-            Login
+            Sign Up
           </button>
           <p className="text-center">
             Already have an account?{" "}
             <Link to="/user-login" className="text-blue-600">
-               Login here
+              Login here
             </Link>
           </p>
         </form>
