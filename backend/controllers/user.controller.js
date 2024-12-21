@@ -35,9 +35,15 @@ exports.registerUser = async (req, res, next) => {
 
     const token = await newUser.generateAuthToken();
 
-    res
-      .status(201)
-      .json({ message: "User Created Successfully", user: newUser, token });
+    res.status(201).json({
+      message: "User Created Successfully",
+      user: {
+        firstname: newUser.fullname.firstname,
+        lastname: newUser.fullname.lastname,
+        email: newUser.email,
+      },
+      token,
+    });
   } catch (error) {
     return next(errorHandle(400, error));
   }
@@ -57,7 +63,6 @@ exports.loginUser = async (req, res, next) => {
     const isMatch = await findUser.comparePassword(password);
     if (!isMatch) {
       return next(errorHandle(401, "email or password is incorrect"));
-
     }
 
     const token = await findUser.generateAuthToken();

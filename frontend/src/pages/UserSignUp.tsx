@@ -1,13 +1,14 @@
-import { ChangeEvent, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { ChangeEvent, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAppSelector, useAppDispatch } from "../app/hook";
 import { createUser } from "../app/features/user/userSlice";
 
 const UserSignUp = () => {
   const dispatch = useAppDispatch();
-  const { status, error, message } = useAppSelector((state) => state.user);
+  const navigate = useNavigate();
+  const { status } = useAppSelector((state) => state.user);
 
   const [formValues, setFormValues] = useState({
     firstname: "",
@@ -23,21 +24,27 @@ const UserSignUp = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await dispatch(createUser(formValues));
+    try {
+      const response = await dispatch(createUser(formValues)).unwrap();
+      if (response?.token) {
+        toast.success(response.message);
+        localStorage.setItem("token", response.token);
+        navigate("/home");
+      }
+    } catch (err) {
+      toast.error(err as string);
+    } finally {
+      setFormValues({
+        firstname: "",
+        lastname: "",
+        email: "",
+        password: "",
+      });
+    }
   };
-
-  useEffect(() => {
-    if (status === "idle" && message) {
-      toast.success(message);
-    }
-    if (status === "failed" && error) {
-      toast.error(error);
-    }
-  }, [status, error, message]);
 
   return (
     <div className="p-7 h-screen flex flex-col justify-between">
-      <ToastContainer />
       <div>
         <img
           className="w-24 mb-10"

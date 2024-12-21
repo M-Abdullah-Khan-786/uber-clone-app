@@ -48,7 +48,7 @@ async function makeApiCall<T>({
   } catch (error: any) {
     if (error.response?.status === 401 || error.response?.status === 403 ) {
       localStorage.removeItem("token");
-      window.location.href = "/login";
+      window.location.href = "/user-login";
     }
     throw error;
   }

@@ -13,8 +13,23 @@ export const registerNewUser = async (data: {
       data: data,
     });
     return response;
-  } catch (error) {
-    console.error(error);
-    throw new Error("Faild To Create New User");
+  } catch (error: any) {
+    const backendMessage = error.response?.data?.message || "Failed to register user";
+    throw new Error(backendMessage);
+  }
+};
+
+
+export const loginUser = async (credentials: { email: string; password: string }) => {
+  try {
+    const response = await makeApiCall<any>({
+      url: "api/user/login",
+      method: "POST",
+      data: credentials,
+    });
+    return response;
+  } catch (error: any) {
+    const backendMessage = error.response?.data?.message || "Login Failed";
+    throw new Error(backendMessage);
   }
 };

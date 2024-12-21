@@ -17,7 +17,6 @@ const App = () => {
       <Route path="/user-signup" element={<UserSignUp/>} />
       <Route path="/driver-login" element={<DriverLogin />} />
       <Route path="/driver-signup" element={<DriverSignUp/>} />
-
     </Routes>
     </>
   )
