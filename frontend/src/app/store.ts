@@ -1,10 +1,12 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import userSlice from './features/user/userSlice';
+import driverSlice from './features/driver/driverSlice';
 
 
 export const store = configureStore({
   reducer: {
     user: userSlice,
+    driver: driverSlice
   },
 });
 

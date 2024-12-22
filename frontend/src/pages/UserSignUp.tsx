@@ -94,7 +94,7 @@ const UserSignUp = () => {
             className="bg-[#111] text-white font-semibold mb-3 rounded px-4 py-2 w-full text-lg placeholder:text-base"
             disabled={status === "loading"}
           >
-            Sign Up
+            Create an User Account
           </button>
           <p className="text-center">
             Already have an account?{" "}

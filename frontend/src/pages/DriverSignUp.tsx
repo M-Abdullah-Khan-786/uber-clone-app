@@ -3,13 +3,19 @@ import { Link } from "react-router-dom";
 
 const DriverSignUp = () => {
   const [formValues, setformValues] = useState({
-    firstname:"",
-    lastname:"",
+    firstname: "",
+    lastname: "",
     email: "",
     password: "",
+    vehicleType: "",
+    vehicleNumber: "",
+    vehicleColor: "",
+    vehicleCapacity: "",
   });
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setformValues({ ...formValues, [name]: value });
   };
@@ -28,26 +34,26 @@ const DriverSignUp = () => {
           alt="uber"
         />
         <form onSubmit={handleSubmit}>
-        <h3 className="text-lg font-medium mb-2">What's your Name</h3>
+          <h3 className="text-lg font-medium mb-2">What's your Name</h3>
           <div className="flex gap-5 mb-5">
-          <input
-            className="bg-[#eeeeee] rounded px-4 py-2 w-1/2 border text-lg placeholder:text-base"
-            value={formValues.firstname}
-            name="firstname"
-            required
-            type="text"
-            placeholder="First Name"
-            onChange={handleInputChange}
-          />
-          <input
-            className="bg-[#eeeeee] rounded px-4 py-2 w-1/2 border text-lg placeholder:text-base"
-            value={formValues.lastname}
-            name="lastname"
-            required
-            type="text"
-            placeholder="Last Name"
-            onChange={handleInputChange}
-          />
+            <input
+              className="bg-[#eeeeee] rounded px-4 py-2 w-1/2 border text-lg placeholder:text-base"
+              value={formValues.firstname}
+              name="firstname"
+              required
+              type="text"
+              placeholder="First Name"
+              onChange={handleInputChange}
+            />
+            <input
+              className="bg-[#eeeeee] rounded px-4 py-2 w-1/2 border text-lg placeholder:text-base"
+              value={formValues.lastname}
+              name="lastname"
+              required
+              type="text"
+              placeholder="Last Name"
+              onChange={handleInputChange}
+            />
           </div>
           <h3 className="text-lg font-medium mb-2">What's your email</h3>
           <input
@@ -69,16 +75,60 @@ const DriverSignUp = () => {
             placeholder="********"
             onChange={handleInputChange}
           />
+          <h3 className="text-lg font-medium mb-2">Vehicle Information</h3>
+          <div className="flex gap-5 mb-5">
+            <select
+              className="bg-[#eeeeee] rounded px-4 py-2 w-1/2 border text-lg placeholder:text-base"
+              value={formValues.vehicleType}
+              name="vehicleType"
+              required
+              onChange={handleInputChange}
+            >
+              <option value="">Select Vehicle Type</option>
+              <option value="car">Car</option>
+              <option value="bike">Bike</option>
+              <option value="auto-rickshaw">Auto Rickshaw</option>
+            </select>
+            <input
+              className="bg-[#eeeeee] rounded px-4 py-2 w-1/2 border text-lg placeholder:text-base"
+              value={formValues.vehicleNumber}
+              name="vehicleNumber"
+              required
+              type="text"
+              placeholder="Vehicle Number"
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="flex gap-5 mb-5">
+            <input
+              className="bg-[#eeeeee] rounded px-4 py-2 w-1/2 border text-lg placeholder:text-base"
+              value={formValues.vehicleColor}
+              name="vehicleColor"
+              required
+              type="text"
+              placeholder="Vehicle Color"
+              onChange={handleInputChange}
+            />
+            <input
+              className="bg-[#eeeeee] rounded px-4 py-2 w-1/2 border text-lg placeholder:text-base"
+              value={formValues.vehicleCapacity}
+              name="vehicleCapacity"
+              required
+              type="number"
+              placeholder="Vehicle Capacity"
+              onChange={handleInputChange}
+            />
+          </div>
           <button
             type="submit"
             className="bg-[#111] text-white font-semibold mb-3 rounded px-4 py-2 w-full text-lg placeholder:text-base"
           >
-            Login
+            Create an Driver Account
           </button>
           <p className="text-center">
             Already have an account?{" "}
             <Link to="/user-login" className="text-blue-600">
-               Login here
+              Login here
             </Link>
           </p>
         </form>

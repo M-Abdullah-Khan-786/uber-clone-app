@@ -60,7 +60,23 @@ exports.registerdriver = async (req, res, next) => {
 
     res.status(201).json({
       message: "Driver Created Successfully",
-      driver: newdriver,
+      driver: {
+        firstname: newdriver.fullname.firstname,
+        lastname: newdriver.fullname.lastname,
+        email: newdriver.email,
+        socketId: newdriver.socketId,
+        status: newdriver.status,
+        vehicle: {
+          vehicleType: newdriver.vehicle.vehicleType,
+          vehicleNumber: newdriver.vehicle.vehicleNumber,
+          vehicleColor: newdriver.vehicle.vehicleColor,
+          vehicleCapacity: newdriver.vehicle.vehicleCapacity,
+        },
+        location: {
+          latitude: newdriver.location.latitude,
+          longitude: newdriver.location.longitude,
+        },
+      },
       token,
     });
   } catch (error) {

@@ -69,7 +69,7 @@ export const loginExistingUser = createAsyncThunk<
   }
 });
 
-const newUserSlice = createSlice({
+const userSlice = createSlice({
   name: "registerNewUser",
   initialState,
   reducers: {},
@@ -118,4 +118,4 @@ const newUserSlice = createSlice({
   },
 });
 
-export default newUserSlice.reducer;
+export default userSlice.reducer;
