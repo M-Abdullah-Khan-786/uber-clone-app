@@ -46,20 +46,22 @@ interface DriverResponse {
 }
 
 interface CreateDriverResponse {
-  firstname: string;
-  lastname: string;
-  email: string;
-  password: string;
-  status: string;
-  vehicle: {
-    vehicleType: string;
-    vehicleNumber: string;
-    vehicleColor: string;
-    vehicleCapacity: string;
-  };
   message: string;
+  driver: {
+    firstname: string;
+    lastname: string;
+    email: string;
+    status: string;
+    vehicle: {
+      vehicleType: string;
+      vehicleNumber: string;
+      vehicleColor: string;
+      vehicleCapacity: string;
+    };
+  };
   token: string;
 }
+
 
 export const createDriver = createAsyncThunk<
   CreateDriverResponse,
@@ -112,17 +114,17 @@ const driverSlice = createSlice({
         createDriver.fulfilled,
         (state, action: PayloadAction<CreateDriverResponse>) => {
           state.status = "idle";
-          state.firstname = action.payload.firstname;
-          state.lastname = action.payload.lastname;
-          state.email = action.payload.email;
-          state.password = action.payload.password;
-          state.driverStatus = action.payload.status;
-          state.vehicleType = action.payload.vehicle.vehicleType;
-          state.vehicleNumber = action.payload.vehicle.vehicleNumber;
-          state.vehicleColor = action.payload.vehicle.vehicleColor;
-          state.vehicleCapacity = action.payload.vehicle.vehicleCapacity;
+          state.firstname = action.payload.driver.firstname; // Adjusted
+          state.lastname = action.payload.driver.lastname; // Adjusted
+          state.email = action.payload.driver.email; // Adjusted
+          state.driverStatus = action.payload.driver.status;
+          state.vehicleType = action.payload.driver.vehicle.vehicleType;
+          state.vehicleNumber = action.payload.driver.vehicle.vehicleNumber;
+          state.vehicleColor = action.payload.driver.vehicle.vehicleColor;
+          state.vehicleCapacity = action.payload.driver.vehicle.vehicleCapacity;
           state.message = action.payload.message;
           state.token = action.payload.token;
+          console.log(action.payload);
         }
       )
       .addCase(

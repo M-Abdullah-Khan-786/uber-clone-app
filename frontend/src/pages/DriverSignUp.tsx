@@ -1,8 +1,16 @@
 import { ChangeEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useAppSelector, useAppDispatch } from "../app/hook";
+import { createDriver } from "../app/features/driver/driverSlice";
 
 const DriverSignUp = () => {
-  const [formValues, setformValues] = useState({
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { status } = useAppSelector((state) => state.driver);
+
+  const [formValues, setFormValues] = useState({
     firstname: "",
     lastname: "",
     email: "",
@@ -17,12 +25,33 @@ const DriverSignUp = () => {
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setformValues({ ...formValues, [name]: value });
+    setFormValues({ ...formValues, [name]: value });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formValues);
+    try {
+      const response = await dispatch(createDriver(formValues)).unwrap();
+      console.log(response);
+      if (response?.token) {
+        toast.success(response.message);
+        localStorage.setItem("token", response.token);
+        navigate("/home");
+      }
+    } catch (err) {
+      toast.error(err as string);
+    } finally {
+      setFormValues({
+        firstname: "",
+        lastname: "",
+        email: "",
+        password: "",
+        vehicleType: "",
+        vehicleNumber: "",
+        vehicleColor: "",
+        vehicleCapacity: "",
+      });
+    }
   };
 
   return (
@@ -40,7 +69,6 @@ const DriverSignUp = () => {
               className="bg-[#eeeeee] rounded px-4 py-2 w-1/2 border text-lg placeholder:text-base"
               value={formValues.firstname}
               name="firstname"
-              required
               type="text"
               placeholder="First Name"
               onChange={handleInputChange}
@@ -49,7 +77,6 @@ const DriverSignUp = () => {
               className="bg-[#eeeeee] rounded px-4 py-2 w-1/2 border text-lg placeholder:text-base"
               value={formValues.lastname}
               name="lastname"
-              required
               type="text"
               placeholder="Last Name"
               onChange={handleInputChange}
@@ -60,7 +87,6 @@ const DriverSignUp = () => {
             className="bg-[#eeeeee] mb-5 rounded px-4 py-2 w-full border text-lg placeholder:text-base"
             value={formValues.email}
             name="email"
-            required
             type="email"
             placeholder="example@gmail.com"
             onChange={handleInputChange}
@@ -68,7 +94,6 @@ const DriverSignUp = () => {
           <h3 className="text-lg font-medium mb-2">What's your password</h3>
           <input
             className="bg-[#eeeeee] mb-5 rounded px-4 py-2 w-full border text-lg placeholder:text-base"
-            required
             value={formValues.password}
             name="password"
             type="password"
@@ -81,7 +106,6 @@ const DriverSignUp = () => {
               className="bg-[#eeeeee] rounded px-4 py-2 w-1/2 border text-lg placeholder:text-base"
               value={formValues.vehicleType}
               name="vehicleType"
-              required
               onChange={handleInputChange}
             >
               <option value="">Select Vehicle Type</option>
@@ -93,7 +117,6 @@ const DriverSignUp = () => {
               className="bg-[#eeeeee] rounded px-4 py-2 w-1/2 border text-lg placeholder:text-base"
               value={formValues.vehicleNumber}
               name="vehicleNumber"
-              required
               type="text"
               placeholder="Vehicle Number"
               onChange={handleInputChange}
@@ -104,7 +127,6 @@ const DriverSignUp = () => {
               className="bg-[#eeeeee] rounded px-4 py-2 w-1/2 border text-lg placeholder:text-base"
               value={formValues.vehicleColor}
               name="vehicleColor"
-              required
               type="text"
               placeholder="Vehicle Color"
               onChange={handleInputChange}
@@ -113,7 +135,6 @@ const DriverSignUp = () => {
               className="bg-[#eeeeee] rounded px-4 py-2 w-1/2 border text-lg placeholder:text-base"
               value={formValues.vehicleCapacity}
               name="vehicleCapacity"
-              required
               type="number"
               placeholder="Vehicle Capacity"
               onChange={handleInputChange}
@@ -122,12 +143,13 @@ const DriverSignUp = () => {
           <button
             type="submit"
             className="bg-[#111] text-white font-semibold mb-3 rounded px-4 py-2 w-full text-lg placeholder:text-base"
+            disabled={status === "loading"}
           >
-            Create an Driver Account
+            Create a Driver Account
           </button>
           <p className="text-center">
             Already have an account?{" "}
-            <Link to="/user-login" className="text-blue-600">
+            <Link to="/driver-login" className="text-blue-600">
               Login here
             </Link>
           </p>

@@ -20,7 +20,7 @@ router.post(
     body("vehicleType").isIn(['car', 'bike', 'auto-rickshaw']).withMessage("Vehicle type must be one of the following"),
     body("vehicleNumber").isLength({ min: 1}).withMessage("Vehicle Number must be at least 1 characters"),
     body("vehicleColor").isLength({ min: 3}).withMessage("Vehicle Color must be at least 3 characters"),
-    body("vehicleCapacity").isInt({ min: 3}).withMessage("Vehicle Capacity must be at least 1"),
+    body("vehicleCapacity").isInt({ min: 1}).withMessage("Vehicle Capacity must be at least 1"),
 
   ],
   registerdriver
