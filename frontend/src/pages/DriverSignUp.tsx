@@ -32,7 +32,6 @@ const DriverSignUp = () => {
     e.preventDefault();
     try {
       const response = await dispatch(createDriver(formValues)).unwrap();
-      console.log(response);
       if (response?.token) {
         toast.success(response.message);
         localStorage.setItem("token", response.token);

@@ -35,7 +35,7 @@ const initialState: DriverData = {
 
 interface DriverResponse {
   message: string;
-  user: {
+  driver: {
     fullname: {
       firstname: string;
       lastname: string;
@@ -114,9 +114,9 @@ const driverSlice = createSlice({
         createDriver.fulfilled,
         (state, action: PayloadAction<CreateDriverResponse>) => {
           state.status = "idle";
-          state.firstname = action.payload.driver.firstname; // Adjusted
-          state.lastname = action.payload.driver.lastname; // Adjusted
-          state.email = action.payload.driver.email; // Adjusted
+          state.firstname = action.payload.driver.firstname;
+          state.lastname = action.payload.driver.lastname;
+          state.email = action.payload.driver.email;
           state.driverStatus = action.payload.driver.status;
           state.vehicleType = action.payload.driver.vehicle.vehicleType;
           state.vehicleNumber = action.payload.driver.vehicle.vehicleNumber;
@@ -124,7 +124,6 @@ const driverSlice = createSlice({
           state.vehicleCapacity = action.payload.driver.vehicle.vehicleCapacity;
           state.message = action.payload.message;
           state.token = action.payload.token;
-          console.log(action.payload);
         }
       )
       .addCase(
@@ -143,9 +142,9 @@ const driverSlice = createSlice({
         loginExistingDriver.fulfilled,
         (state, action: PayloadAction<DriverResponse>) => {
           state.status = "idle";
-          state.firstname = action.payload.user.fullname.firstname;
-          state.lastname = action.payload.user.fullname.lastname;
-          state.email = action.payload.user.email;
+          state.firstname = action.payload.driver.fullname.firstname;
+          state.lastname = action.payload.driver.fullname.lastname;
+          state.email = action.payload.driver.email;
           state.token = action.payload.token;
           state.message = action.payload.message;
         }

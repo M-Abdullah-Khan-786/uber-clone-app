@@ -58,14 +58,16 @@ export const loginExistingUser = createAsyncThunk<
   {
     email: string;
     password: string;
-  }
+  },
+  { rejectValue: string }
+
 >("user/loginExistingUser", async (credentials, { rejectWithValue }) => {
   try {
     const response = await loginUser(credentials);
     return response;
-  } catch (error) {
+  } catch (error:any) {
     console.error("Error logging in user:", error);
-    return rejectWithValue("Login failed");
+    return rejectWithValue(error.message || "Login failed");
   }
 });
 
@@ -111,9 +113,9 @@ const userSlice = createSlice({
           state.message = action.payload.message;
         }
       )
-      .addCase(loginExistingUser.rejected, (state) => {
+      .addCase(loginExistingUser.rejected,  (state, action: PayloadAction<string | undefined>) => {
         state.status = "failed";
-        state.error = "Login failed";
+        state.error = action.payload || "Login failed";
       });
   },
 });

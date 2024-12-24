@@ -1,7 +1,16 @@
 import { ChangeEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useAppSelector, useAppDispatch } from "../app/hook";
+import { loginExistingDriver } from "../app/features/driver/driverSlice";
 
 const DriverLogin = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const { status } = useAppSelector((state) => state.driver);
+
   const [formValues, setformValues] = useState<{
     email: string;
     password: string;
@@ -15,9 +24,18 @@ const DriverLogin = () => {
     setformValues({ ...formValues, [name]: value });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formValues);
+    try {
+      const response = await dispatch(loginExistingDriver(formValues)).unwrap();
+      toast.success(response.message);
+      localStorage.setItem("token", response.token);
+      navigate("/home");
+    } catch (err) {
+      toast.error(err as string);
+    } finally {
+      setformValues({ email: "", password: "" });
+    }
   };
 
   return (
@@ -52,6 +70,7 @@ const DriverLogin = () => {
           <button
             type="submit"
             className="bg-[#111] text-white font-semibold mb-3 rounded px-4 py-2 w-full text-lg placeholder:text-base"
+            disabled={status === "loading"}
           >
             Login
           </button>
