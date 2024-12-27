@@ -2,6 +2,7 @@ import { FormEvent, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { IoIosArrowDown } from "react-icons/io";
+import LocationPannel from "../components/LocationPannel";
 
 const Home = () => {
   const [panelOpen, setpanelOpen] = useState(false);
@@ -21,6 +22,7 @@ const Home = () => {
       if (panelOpen) {
         gsap.to(panelRef.current, {
           height: "70%",
+          padding:24
         });
         gsap.to(panelArrowRef.current, {
           opacity: "1",
@@ -28,6 +30,7 @@ const Home = () => {
       } else {
         gsap.to(panelRef.current, {
           height: "0%",
+          padding:0
         });
         gsap.to(panelArrowRef.current, {
           opacity: "0",
@@ -101,7 +104,9 @@ const Home = () => {
               />
             </form>
           </div>
-          <div ref={panelRef} className="h-0 bg-red-500"></div>
+          <div ref={panelRef} className="h-0 bg-white">
+            <LocationPannel/>
+          </div>
         </div>
       </div>
     </>
