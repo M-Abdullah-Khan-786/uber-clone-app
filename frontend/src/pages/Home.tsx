@@ -3,6 +3,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { IoIosArrowDown } from "react-icons/io";
 import LocationPannel from "../components/LocationPannel";
+import VehiclePannel from "../components/VehiclePannel";
 
 const Home = () => {
   const [panelOpen, setpanelOpen] = useState(false);
@@ -10,8 +11,10 @@ const Home = () => {
     pickup: "",
     dropooff: "",
   });
+  const [vehiclePanel, setVehiclePanel] = useState(false);
   const panelRef = useRef(null);
   const panelArrowRef = useRef(null);
+  const vehiclePanelRef = useRef(null);
 
   const togglePanel = () => {
     setpanelOpen(true);
@@ -22,7 +25,7 @@ const Home = () => {
       if (panelOpen) {
         gsap.to(panelRef.current, {
           height: "70%",
-          padding:24
+          padding: 24,
         });
         gsap.to(panelArrowRef.current, {
           opacity: "1",
@@ -30,7 +33,7 @@ const Home = () => {
       } else {
         gsap.to(panelRef.current, {
           height: "0%",
-          padding:0
+          padding: 0,
         });
         gsap.to(panelArrowRef.current, {
           opacity: "0",
@@ -38,6 +41,21 @@ const Home = () => {
       }
     },
     [panelOpen]
+  );
+
+  useGSAP(
+    function () {
+      if (vehiclePanel) {
+        gsap.to(vehiclePanelRef.current, {
+          transform: "translateY(0)",
+        });
+      } else {
+        gsap.to(vehiclePanelRef.current, {
+          transform: "translateY(100%)",
+        });
+      }
+    },
+    [vehiclePanel]
   );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,7 +69,7 @@ const Home = () => {
 
   return (
     <>
-      <div className="h-screen relative">
+      <div className="h-screen relative overflow-hidden">
         <img
           className="w-20 absolute left-5 top-5"
           src="https://download.logo.wine/logo/Uber/Uber-Logo.wine.png"
@@ -105,8 +123,17 @@ const Home = () => {
             </form>
           </div>
           <div ref={panelRef} className="h-0 bg-white">
-            <LocationPannel/>
+            <LocationPannel
+              vehiclePanel={vehiclePanel}
+              setVehiclePanel={setVehiclePanel}
+            />
           </div>
+        </div>
+        <div
+          ref={vehiclePanelRef}
+          className="w-full fixed z-10 bottom-0 bg-white px-3 py-10 pt-14 translate-y-full"
+        >
+        <VehiclePannel setVehiclePanel={setVehiclePanel}/>
         </div>
       </div>
     </>
