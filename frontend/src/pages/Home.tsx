@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { IoIosArrowDown } from "react-icons/io";
 import LocationPannel from "../components/LocationPannel";
 import VehiclePannel from "../components/VehiclePannel";
+import ConfrirmVehiclePannel from "../components/ConfrirmVehiclePannel";
 
 const Home = () => {
   const [panelOpen, setpanelOpen] = useState(false);
@@ -12,9 +13,11 @@ const Home = () => {
     dropooff: "",
   });
   const [vehiclePanel, setVehiclePanel] = useState(false);
+  const [confirmVehiclePannel, setConfirmVehiclePannel] = useState(false);
   const panelRef = useRef(null);
   const panelArrowRef = useRef(null);
   const vehiclePanelRef = useRef(null);
+  const confirmVehiclePannelRef = useRef(null);
 
   const togglePanel = () => {
     setpanelOpen(true);
@@ -56,6 +59,21 @@ const Home = () => {
       }
     },
     [vehiclePanel]
+  );
+
+  useGSAP(
+    function () {
+      if (confirmVehiclePannel) {
+        gsap.to(confirmVehiclePannelRef.current, {
+          transform: "translateY(0)",
+        });
+      } else {
+        gsap.to(confirmVehiclePannelRef.current, {
+          transform: "translateY(100%)",
+        });
+      }
+    },
+    [confirmVehiclePannel]
   );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -133,7 +151,13 @@ const Home = () => {
           ref={vehiclePanelRef}
           className="w-full fixed z-10 bottom-0 bg-white px-3 py-10 pt-14 translate-y-full"
         >
-        <VehiclePannel setVehiclePanel={setVehiclePanel}/>
+        <VehiclePannel setConfirmVehiclePannel={setConfirmVehiclePannel} setVehiclePanel={setVehiclePanel}/>
+        </div>
+        <div
+          ref={confirmVehiclePannelRef}
+          className="w-full fixed z-10 bottom-0 bg-white px-3 py-10 pt-12 translate-y-full"
+        >
+          <ConfrirmVehiclePannel setConfirmVehiclePannel={setConfirmVehiclePannel}/>
         </div>
       </div>
     </>
