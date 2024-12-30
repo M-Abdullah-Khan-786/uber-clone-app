@@ -3,27 +3,25 @@ import { FaLocationDot } from "react-icons/fa6";
 import { GrLocationPin } from "react-icons/gr";
 import { IoIosArrowDown } from "react-icons/io";
 
-interface confrirmVehiclePannelProps {
-  setConfirmVehiclePannel: React.Dispatch<React.SetStateAction<boolean>>;
-  setLookingDriverPannel:  React.Dispatch<React.SetStateAction<boolean>>;
+interface lookingForDriverPannelProps {
+  setLookingDriverPannel: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ConfrirmVehiclePannel: React.FC<confrirmVehiclePannelProps> = ({
-  setConfirmVehiclePannel,
-  setLookingDriverPannel
+const LookingForDriverPannel: React.FC<lookingForDriverPannelProps> = ({
+  setLookingDriverPannel,
 }) => {
   return (
     <>
       <h5
         onClick={() => {
-          setConfirmVehiclePannel(false);
+          setLookingDriverPannel(false);
         }}
         className="p-1 text-center w-[93%] absolute top-0  flex justify-center items-center"
       >
         <IoIosArrowDown className="text-3xl text-gray-400" />
       </h5>
 
-      <h3 className="text-2xl font-semibold mb-5">Confirm your Drive</h3>
+      <h3 className="text-2xl font-semibold mb-5">Looking for nearby Drive</h3>
       <div className="flex flex-col gap-2 justify-between items-center">
         {" "}
         <img
@@ -53,16 +51,12 @@ const ConfrirmVehiclePannel: React.FC<confrirmVehiclePannelProps> = ({
               <p className="text-sm text-gray-600">Cash</p>
             </div>
           </div>
+
+          
         </div>
-        <button onClick={()=>{
-          setLookingDriverPannel(true)
-          setConfirmVehiclePannel(false)
-        }} className="w-full bg-black text-white font-semibold rounded-lg p-3 mt-5">
-          Confirm
-        </button>
       </div>
     </>
   );
 };
 
-export default ConfrirmVehiclePannel;
+export default LookingForDriverPannel;
