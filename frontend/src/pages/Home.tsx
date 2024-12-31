@@ -6,6 +6,7 @@ import LocationPannel from "../components/LocationPannel";
 import VehiclePannel from "../components/VehiclePannel";
 import ConfrirmVehiclePannel from "../components/ConfrirmVehiclePannel";
 import LookingForDriverPannel from "../components/LookingForDriverPannel";
+import WaitingForDriverPannel from "../components/WaitingForDriverPannel";
 
 const Home = () => {
   const [panelOpen, setpanelOpen] = useState(false);
@@ -16,11 +17,14 @@ const Home = () => {
   const [vehiclePanel, setVehiclePanel] = useState(false);
   const [confirmVehiclePannel, setConfirmVehiclePannel] = useState(false);
   const [lookingDriverPannel, setLookingDriverPannel] = useState(false);
+  const [waitingForDriverPannel, setWaitingForDriverPannel] = useState(false);
+
   const panelRef = useRef(null);
   const panelArrowRef = useRef(null);
   const vehiclePanelRef = useRef(null);
   const confirmVehiclePannelRef = useRef(null);
   const lookingDriverPannelRef = useRef(null);
+  const waitingForDriverPannelRef = useRef(null);
 
   const togglePanel = () => {
     setpanelOpen(true);
@@ -92,6 +96,21 @@ const Home = () => {
       }
     },
     [lookingDriverPannel]
+  );
+
+  useGSAP(
+    function () {
+      if (waitingForDriverPannel) {
+        gsap.to(waitingForDriverPannelRef.current, {
+          transform: "translateY(0)",
+        });
+      } else {
+        gsap.to(waitingForDriverPannelRef.current, {
+          transform: "translateY(100%)",
+        });
+      }
+    },
+    [waitingForDriverPannel]
   );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -183,10 +202,21 @@ const Home = () => {
             setLookingDriverPannel={setLookingDriverPannel}
           />
         </div>
-        <div ref={lookingDriverPannelRef}
+        <div
+          ref={lookingDriverPannelRef}
           className="w-full fixed z-10 bottom-0 bg-white px-3 py-10 pt-12 translate-y-full"
         >
-          <LookingForDriverPannel setLookingDriverPannel={setLookingDriverPannel}/>
+          <LookingForDriverPannel
+            setLookingDriverPannel={setLookingDriverPannel}
+          />
+        </div>
+        <div
+          ref={waitingForDriverPannelRef}
+          className="w-full fixed z-10 bottom-0 bg-white px-3 py-10 pt-12"
+        >
+          <WaitingForDriverPannel
+            setWaitingForDriverPannel={setWaitingForDriverPannel}
+          />
         </div>
       </div>
     </>
