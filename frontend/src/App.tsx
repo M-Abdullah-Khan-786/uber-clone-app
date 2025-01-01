@@ -8,6 +8,7 @@ import Start from "./pages/Start"
 import Home from "./pages/Home"
 import CaptainHome from "./pages/CaptainHome"
 import PrivateRoute from "./utils/PrivateRoute"
+import Riding from "./pages/Riding"
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
       <Route path="/user-signup" element={<UserSignUp/>} />
       <Route path="/driver-login" element={<DriverLogin />} />
       <Route path="/driver-signup" element={<DriverSignUp/>} />
+      <Route path="/riding" element={<Riding />} />
       <Route
         path="/home"
         element={<PrivateRoute element={<Home />} />}
