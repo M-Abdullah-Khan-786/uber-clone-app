@@ -1,8 +1,8 @@
 import { RiLogoutCircleFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
-import CaptainDetails from "../components/CaptainDetails";
+import DriverDetails from "../components/DriverDetails";
 
-const CaptainHome = () => {
+const DriverHome = () => {
   return (
     <>
       <div className="h-screen">
@@ -27,11 +27,11 @@ const CaptainHome = () => {
           />
         </div>
         <div className="h-2/5 p-6">
-          <CaptainDetails />
+          <DriverDetails />
         </div>
       </div>
     </>
   );
 };
 
-export default CaptainHome;
+export default DriverHome;

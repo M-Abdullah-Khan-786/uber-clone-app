@@ -1,7 +1,7 @@
 import { FaBook } from "react-icons/fa6";
 import { IoIosSpeedometer, IoIosTime } from "react-icons/io";
 
-const CaptainDetails = () => {
+const DriverDetails = () => {
   return (
     <>
       <div className="flex items-center justify-between">
@@ -42,4 +42,4 @@ const CaptainDetails = () => {
   );
 };
 
-export default CaptainDetails;
+export default DriverDetails;
