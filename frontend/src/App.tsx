@@ -6,7 +6,7 @@ import DriverLogin from "./pages/DriverLogin"
 import DriverSignUp from "./pages/DriverSignUp"
 import Start from "./pages/Start"
 import Home from "./pages/Home"
-import CaptainHome from "./pages/DriverHome"
+import DriverHome from "./pages/DriverHome"
 import PrivateRoute from "./utils/PrivateRoute"
 import Riding from "./pages/Riding"
 
@@ -25,8 +25,8 @@ const App = () => {
         element={<PrivateRoute element={<Home />} />}
       />
       <Route
-        path="/captain-home"
-        element={<PrivateRoute element={<CaptainHome />} />}
+        path="/driver-home"
+        element={<PrivateRoute element={<DriverHome />} />}
       />
     </Routes>
     </>

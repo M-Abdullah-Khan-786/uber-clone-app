@@ -35,7 +35,7 @@ const DriverSignUp = () => {
       if (response?.token) {
         toast.success(response.message);
         localStorage.setItem("token", response.token);
-        navigate("/captain-home");
+        navigate("/driver-home");
       }
     } catch (err) {
       toast.error(err as string);

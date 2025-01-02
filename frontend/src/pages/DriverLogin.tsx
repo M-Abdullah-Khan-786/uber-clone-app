@@ -30,7 +30,7 @@ const DriverLogin = () => {
       const response = await dispatch(loginExistingDriver(formValues)).unwrap();
       toast.success(response.message);
       localStorage.setItem("token", response.token);
-      navigate("/captain-home");
+      navigate("/driver-home");
     } catch (err) {
       toast.error(err as string);
     } finally {
