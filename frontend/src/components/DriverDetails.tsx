@@ -34,7 +34,6 @@ const DriverDetails = () => {
         <div className="text-center">
           <FaBook className="text-3xl mb-2 font-thin inline-block" />
           <h5 className="text-lg font-medium">10.20</h5>
-
           <p className="text-sm text-gray-600">Hours Online</p>
         </div>
       </div>
