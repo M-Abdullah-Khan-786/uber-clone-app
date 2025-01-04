@@ -3,12 +3,12 @@ import { FaLocationDot } from "react-icons/fa6";
 import { GrLocationPin } from "react-icons/gr";
 import { IoIosArrowDown } from "react-icons/io";
 
-interface RidePopupPannelProps {
+interface confirmRidePopupPannelProps {
   setRidePopUPPanel: React.Dispatch<React.SetStateAction<boolean>>;
   setConfirmRidePopUPPanel: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const RidePopupPannel: React.FC<RidePopupPannelProps> = ({
+const ConfirmRidePopupPannel: React.FC<confirmRidePopupPannelProps> = ({
   setRidePopUPPanel,
   setConfirmRidePopUPPanel
 }) => {
@@ -16,13 +16,14 @@ const RidePopupPannel: React.FC<RidePopupPannelProps> = ({
     <>
       <h5
         onClick={() => {
-          setRidePopUPPanel(false);
+          setConfirmRidePopUPPanel(false);
         }}
         className="p-1 text-center w-[93%] absolute top-0  flex justify-center items-center"
       >
         <IoIosArrowDown className="text-3xl text-gray-400" />
       </h5>
-      <h3 className="text-2xl font-semibold mb-5">New Ride!</h3>
+
+      <h3 className="text-2xl font-semibold mb-5">Confirm Ride!</h3>
       <div className="flex items-center  justify-between bg-gray-200 rounded-lg p-3 mt-4">
         <div className="flex items-center gap-3">
           <img
@@ -58,23 +59,20 @@ const RidePopupPannel: React.FC<RidePopupPannelProps> = ({
             </div>
           </div>
         </div>
-        <button onClick={()=>{
-          setConfirmRidePopUPPanel(true)
-          setRidePopUPPanel(false)
-        }} className="w-full bg-black text-white font-semibold rounded-lg p-2 mt-5">
-          Accept
+        <button className="w-full bg-black text-white font-semibold rounded-lg p-2 mt-5">
+          Confirm
         </button>
         <button
           onClick={() => {
-            setRidePopUPPanel(false);
+            setConfirmRidePopUPPanel(false);
           }}
           className="w-full bg-red-400 hover:bg-red-600 text-white font-semibold rounded-lg p-2 mt-5"
         >
-          Ignore
+          Cancel
         </button>
       </div>
     </>
   );
 };
 
-export default RidePopupPannel;
+export default ConfirmRidePopupPannel;
