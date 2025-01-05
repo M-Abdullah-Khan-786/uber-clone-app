@@ -10,7 +10,7 @@ interface RidePopupPannelProps {
 
 const RidePopupPannel: React.FC<RidePopupPannelProps> = ({
   setRidePopUPPanel,
-  setConfirmRidePopUPPanel
+  setConfirmRidePopUPPanel,
 }) => {
   return (
     <>
@@ -58,20 +58,25 @@ const RidePopupPannel: React.FC<RidePopupPannelProps> = ({
             </div>
           </div>
         </div>
-        <button onClick={()=>{
-          setConfirmRidePopUPPanel(true)
-          setRidePopUPPanel(false)
-        }} className="w-full bg-black text-white font-semibold rounded-lg p-2 mt-5">
-          Accept
-        </button>
-        <button
-          onClick={() => {
-            setRidePopUPPanel(false);
-          }}
-          className="w-full bg-red-400 hover:bg-red-600 text-white font-semibold rounded-lg p-2 mt-5"
-        >
-          Ignore
-        </button>
+        <div className="flex items-center justify-between w-full mt-5">
+          <button
+            onClick={() => {
+              setRidePopUPPanel(false);
+            }}
+            className="bg-red-400 hover:bg-red-600 text-white font-semibol rounded-lg p-3 px-10"
+          >
+            Ignore
+          </button>
+          <button
+            onClick={() => {
+              setConfirmRidePopUPPanel(true);
+              setRidePopUPPanel(false);
+            }}
+            className="bg-black text-white font-semibold rounded-lg p-3 px-10"
+          >
+            Accept
+          </button>
+        </div>
       </div>
     </>
   );

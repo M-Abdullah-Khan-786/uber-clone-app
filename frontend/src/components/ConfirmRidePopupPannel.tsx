@@ -2,6 +2,7 @@ import { BsCash } from "react-icons/bs";
 import { FaLocationDot } from "react-icons/fa6";
 import { GrLocationPin } from "react-icons/gr";
 import { IoIosArrowDown } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 interface confirmRidePopupPannelProps {
   setRidePopUPPanel: React.Dispatch<React.SetStateAction<boolean>>;
@@ -59,14 +60,15 @@ const ConfirmRidePopupPannel: React.FC<confirmRidePopupPannelProps> = ({
             </div>
           </div>
         </div>
-        <button className="w-full bg-black text-white font-semibold rounded-lg p-2 mt-5">
+        <Link to="/driver-riding" className="flex justify-center w-full bg-black text-white font-semibold rounded-lg p-3 mt-5">
           Confirm
-        </button>
+        </Link>
         <button
           onClick={() => {
             setConfirmRidePopUPPanel(false);
+            setRidePopUPPanel(false); 
           }}
-          className="w-full bg-red-400 hover:bg-red-600 text-white font-semibold rounded-lg p-2 mt-5"
+          className="w-full bg-red-400 hover:bg-red-600 text-white font-semibold rounded-lg p-3 mt-5"
         >
           Cancel
         </button>

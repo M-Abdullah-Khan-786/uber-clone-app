@@ -9,6 +9,7 @@ import Home from "./pages/Home"
 import DriverHome from "./pages/DriverHome"
 import PrivateRoute from "./utils/PrivateRoute"
 import Riding from "./pages/Riding"
+import DriverRiding from "./pages/DriverRiding"
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
       <Route path="/driver-login" element={<DriverLogin />} />
       <Route path="/driver-signup" element={<DriverSignUp/>} />
       <Route path="/riding" element={<Riding />} />
+      <Route path="/driver-riding" element={<DriverRiding/>} />
       <Route
         path="/home"
         element={<PrivateRoute element={<Home />} />}
