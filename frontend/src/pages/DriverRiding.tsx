@@ -1,8 +1,31 @@
-import {  IoIosArrowUp } from "react-icons/io";
+import { IoIosArrowUp } from "react-icons/io";
 import { RiLogoutCircleFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
+import FinishRidePannel from "../components/FinishRidePannel";
+import { useRef, useState } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 const DriverRiding = () => {
+  const [finishRidePanel, setFinishRidePanel] = useState(false);
+
+  const finishRidePanelRef = useRef(null);
+
+  useGSAP(
+    function () {
+      if (finishRidePanel) {
+        gsap.to(finishRidePanelRef.current, {
+          transform: "translateY(0)",
+        });
+      } else {
+        gsap.to(finishRidePanelRef.current, {
+          transform: "translateY(100%)",
+        });
+      }
+    },
+    [finishRidePanel]
+  );
+
   return (
     <>
       <div className="h-screen overflow-hidden">
@@ -26,7 +49,12 @@ const DriverRiding = () => {
             alt=""
           />
         </div>
-        <div className="h-1/5 p-6 flex items-center justify-between relative bg-yellow-300">
+        <div
+          className="h-1/5 p-6 flex items-center justify-between relative bg-yellow-300"
+          onClick={() => {
+            setFinishRidePanel(true);
+          }}
+        >
           <h5 className="p-1 text-center w-[95%] absolute top-0  flex justify-center items-center">
             <IoIosArrowUp className="text-3xl text-gray-400" />
           </h5>
@@ -34,6 +62,14 @@ const DriverRiding = () => {
           <button className="bg-black text-white font-semibold rounded-lg p-3 px-10">
             Complete Ride
           </button>
+        </div>
+        <div
+          ref={finishRidePanelRef}
+          className="w-full fixed z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-14"
+        >
+          <FinishRidePannel
+          setFinishRidePanel={setFinishRidePanel}
+          />
         </div>
       </div>
     </>
