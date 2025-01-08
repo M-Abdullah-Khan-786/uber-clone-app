@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser")
 const { connectDB } = require("./database/connectDB")
 const userRouter =  require("./routes/user.routes")
 const driverRouter =  require("./routes/driver.routes")
+const mapsRoutes = require('./routes/map.routes');
 const { errorMiddleware } = require("./middlewares/error.middleware")
 
 
@@ -19,6 +20,7 @@ app.use(cookieParser())
 
 app.use("/api/user", userRouter)
 app.use("/api/driver", driverRouter)
+app.use("/api/maps", mapsRoutes)
 
 
 connectDB()
