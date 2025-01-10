@@ -1,7 +1,7 @@
 const axios = require("axios");
 const driverModel = require("../models/driver.model");
 
-module.exports.getAddressCoordinate = async (address) => {
+exports.getAddressCoordinate = async (address) => {
   const apiKey = process.env.GOOGLE_MAPS_API_KEY;
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
     address
@@ -24,7 +24,7 @@ module.exports.getAddressCoordinate = async (address) => {
   }
 };
 
-module.exports.getDistanceTime = async (origin, destination) => {
+exports.getDistanceTime = async (origin, destination) => {
   if (!origin || !destination) {
     throw new Error("Origin and destination are required");
   }
@@ -52,7 +52,7 @@ module.exports.getDistanceTime = async (origin, destination) => {
   }
 };
 
-module.exports.getAutoCompleteSuggestions = async (input) => {
+exports.getAutoCompleteSuggestions = async (input) => {
   if (!input) {
     throw new Error("query is required");
   }
@@ -77,7 +77,7 @@ module.exports.getAutoCompleteSuggestions = async (input) => {
   }
 };
 
-module.exports.getDriverInTheRadius = async (ltd, lng, radius) => {
+exports.getDriverInTheRadius = async (ltd, lng, radius) => {
   const drivers = await driverModel.find({
     location: {
       $geoWithin: {
