@@ -1,8 +1,8 @@
 const rideModel = require("../models/ride.model");
-const {getDistanceTime} = require("./map");
+const { getDistanceTime } = require("./map");
 const crypto = require("crypto");
 
-async function getFare(pickup, destination) {
+exports.getFare = async (pickup, destination) => {
   if (!pickup || !destination) {
     throw new Error("Pickup and destination are required");
   }
@@ -46,9 +46,7 @@ async function getFare(pickup, destination) {
   };
 
   return fare;
-}
-
-module.exports.getFare = getFare;
+};
 
 function getOtp(num) {
   function generateOtp(num) {
@@ -60,12 +58,7 @@ function getOtp(num) {
   return generateOtp(num);
 }
 
-exports.createRide = async ({
-  user,
-  pickup,
-  destination,
-  vehicleType,
-}) => {
+exports.createRide = async ({ user, pickup, destination, vehicleType }) => {
   if (!user || !pickup || !destination || !vehicleType) {
     throw new Error("All fields are required");
   }
