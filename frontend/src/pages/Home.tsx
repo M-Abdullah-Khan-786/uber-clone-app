@@ -7,6 +7,7 @@ import VehiclePannel from "../components/VehiclePannel";
 import ConfrirmVehiclePannel from "../components/ConfrirmVehiclePannel";
 import LookingForDriverPannel from "../components/LookingForDriverPannel";
 import WaitingForDriverPannel from "../components/WaitingForDriverPannel";
+import { getAutoCompleteSuggestions } from "../app/features/map/mapService";
 
 const Home = () => {
   const [panelOpen, setpanelOpen] = useState(false);
@@ -18,6 +19,7 @@ const Home = () => {
   const [confirmVehiclePannel, setConfirmVehiclePannel] = useState(false);
   const [lookingDriverPannel, setLookingDriverPannel] = useState(false);
   const [waitingForDriverPannel, setWaitingForDriverPannel] = useState(false);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
 
   const panelRef = useRef(null);
   const panelArrowRef = useRef(null);
@@ -25,6 +27,25 @@ const Home = () => {
   const confirmVehiclePannelRef = useRef(null);
   const lookingDriverPannelRef = useRef(null);
   const waitingForDriverPannelRef = useRef(null);
+
+  const fetchSuggestions = async (input: string) => {
+    try {
+      const response = await getAutoCompleteSuggestions(input);
+      setSuggestions(response.data || []);
+    } catch (error:any) {
+      console.error(error.message);
+      setSuggestions([]);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setformValues({ ...formValues, [name]: value });
+
+    if (name === "pickup" || name === "dropooff") {
+      fetchSuggestions(value);
+    }
+  };
 
   const togglePanel = () => {
     setpanelOpen(true);
@@ -113,9 +134,6 @@ const Home = () => {
     [waitingForDriverPannel]
   );
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setformValues({ ...formValues, [e.target.name]: e.target.value });
-  };
 
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -181,6 +199,7 @@ const Home = () => {
             <LocationPannel
               vehiclePanel={vehiclePanel}
               setVehiclePanel={setVehiclePanel}
+              suggestions={suggestions}
             />
           </div>
         </div>
