@@ -45,11 +45,8 @@ exports.getAutoCompleteSuggestions = async (req, res, next) => {
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-
     const { input } = req.query;
-
     const suggestions = await getAutoCompleteSuggestions(input);
-
     res.status(200).json(suggestions);
   } catch (err) {
     console.error(err);

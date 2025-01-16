@@ -3,7 +3,7 @@ import { makeApiCall } from "../../../utils/api";
 export const getCoordinates = async (address: string) => {
   try {
     const response = await makeApiCall<any>({
-      url: "/api/maps/get-coordinates",
+      url: "api/maps/get-coordinates",
       method: "GET",
       params: { address },
     });
@@ -18,7 +18,7 @@ export const getCoordinates = async (address: string) => {
 export const getDistanceTime = async (origin: string, destination: string) => {
   try {
     const response = await makeApiCall<any>({
-      url: "/api/maps/get-distance-time",
+      url: "api/maps/get-distance-time",
       method: "GET",
       params: { origin, destination },
     });
@@ -33,7 +33,7 @@ export const getDistanceTime = async (origin: string, destination: string) => {
 export const getAutoCompleteSuggestions = async (input: string) => {
   try {
     const response = await makeApiCall<any>({
-      url: "/api/maps/get-suggestions",
+      url: "api/maps/get-suggestions",
       method: "GET",
       params: { input },
     });

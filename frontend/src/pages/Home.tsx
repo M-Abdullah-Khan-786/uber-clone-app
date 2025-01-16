@@ -32,7 +32,7 @@ const Home = () => {
     try {
       const response = await getAutoCompleteSuggestions(input);
       setSuggestions(response.data || []);
-    } catch (error:any) {
+    } catch (error: any) {
       console.error(error.message);
       setSuggestions([]);
     }
@@ -134,7 +134,6 @@ const Home = () => {
     [waitingForDriverPannel]
   );
 
-
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Form submitted!");
@@ -197,9 +196,11 @@ const Home = () => {
           </div>
           <div ref={panelRef} className="h-0 bg-white">
             <LocationPannel
-              vehiclePanel={vehiclePanel}
               setVehiclePanel={setVehiclePanel}
+              setpanelOpen={setpanelOpen}
               suggestions={suggestions}
+              setformValues={setformValues}
+              inputType="pickup"
             />
           </div>
         </div>
