@@ -26,15 +26,6 @@ const LocationPannel: React.FC<LocationPannelProps> = ({
 
   return (
     <div>
-      <button
-        onClick={() => {
-          setpanelOpen(false);
-          setVehiclePanel(true);
-        }}
-        className="w-full bg-black text-white font-semibold py-2 rounded-lg"
-      >
-        Confirm Location
-      </button>
       {suggestions.map((location: string, index: number) => (
         <div
           key={index}
