@@ -38,7 +38,7 @@ exports.getFare = async (pickup, destination) => {
         (distanceTime.distance.value / 1000) * perKmRate.car +
         (distanceTime.duration.value / 60) * perMinuteRate.car
     ),
-    moto: Math.round(
+    bike: Math.round(
       baseFare.bike +
         (distanceTime.distance.value / 1000) * perKmRate.bike +
         (distanceTime.duration.value / 60) * perMinuteRate.bike

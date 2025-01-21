@@ -8,6 +8,7 @@ import ConfrirmVehiclePannel from "../components/ConfrirmVehiclePannel";
 import LookingForDriverPannel from "../components/LookingForDriverPannel";
 import WaitingForDriverPannel from "../components/WaitingForDriverPannel";
 import { getAutoCompleteSuggestions } from "../app/features/map/mapService";
+import { getFareEstimate } from "../app/features/ride/rideService";
 
 const Home = () => {
   // State for managing panel visibility and form inputs
@@ -21,6 +22,7 @@ const Home = () => {
   const [lookingDriverPannel, setLookingDriverPannel] = useState(false);
   const [waitingForDriverPannel, setWaitingForDriverPannel] = useState(false);
   const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [fareEstimate, setFareEstimate] = useState<any>(null);
 
   // Refs for panel elements to control animations
   const panelRef = useRef(null);
@@ -145,9 +147,15 @@ const Home = () => {
   );
 
   // Triggered when "Confirm Location" is clicked
-  const findTrip = () => {
+  const findTrip = async() => {
     setpanelOpen(false);
     setVehiclePanel(true);
+    try {
+      const fareData = await getFareEstimate(formValues.pickup, formValues.dropooff);
+      setFareEstimate(fareData);
+    } catch (error) {
+      console.error("Error fetching fare estimate:", error);
+    }
   };
 
   // Form submission handler
@@ -245,6 +253,7 @@ const Home = () => {
           <VehiclePannel
             setConfirmVehiclePannel={setConfirmVehiclePannel}
             setVehiclePanel={setVehiclePanel}
+            fareEstimate={fareEstimate}
           />
         </div>
 
