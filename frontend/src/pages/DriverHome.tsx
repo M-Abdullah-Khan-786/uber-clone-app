@@ -1,18 +1,37 @@
 import { RiLogoutCircleFill } from "react-icons/ri";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import DriverDetails from "../components/DriverDetails";
 import RidePopupPannel from "../components/RidePopupPannel";
 import { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import ConfirmRidePopupPannel from "../components/ConfirmRidePopupPannel";
+import { logoutDriver } from "../app/features/driver/driverService";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const DriverHome = () => {
+  const navigate = useNavigate();
+
   const [RidePopUPPanel, setRidePopUPPanel] = useState(true);
   const [confirmRidePopUPPanel, setConfirmRidePopUPPanel] = useState(false);
 
   const RidePopUPPanelRef = useRef(null);
   const confirmRidePopUPPanelRef = useRef(null);
+
+  const handleLogout = async () => {
+    try {
+      const response = await logoutDriver();
+      if (response) {
+        localStorage.removeItem("token");
+        navigate("/driver-login");
+        toast.success(response.message);
+      }
+    } catch (error: any) {
+      console.error(error);
+      toast.error(error.message);
+    }
+  };
 
   useGSAP(
     function () {
@@ -60,7 +79,10 @@ const DriverHome = () => {
             to="/driver-home"
             className="h-10 w-10 bg-white flex items-center justify-center rounded-full"
           >
-            <RiLogoutCircleFill className="text-2xl font-medium" />
+            <RiLogoutCircleFill
+              onClick={handleLogout}
+              className="text-2xl font-medium"
+            />
           </Link>
         </div>
         <div className="h-3/5">

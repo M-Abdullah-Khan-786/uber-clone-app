@@ -33,3 +33,17 @@ export const loginDriver = async (credentials: { email: string; password: string
     throw new Error(backendMessage);
   }
 };
+
+
+export const logoutDriver = async () => {
+  try {
+    const response = await makeApiCall<any>({
+      url: "api/driver/logout",
+      method: "GET",
+    });
+    return response;
+  } catch (error: any) {
+    const backendMessage = error.response?.data?.message || "Logout Failed";
+    throw new Error(backendMessage);
+  }
+};

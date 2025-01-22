@@ -129,7 +129,9 @@ exports.getProfile = async (req, res, next) => {
 
 // Logout driver
 exports.logoutdriver = async (req, res, next) => {
-  const token = req.cookies.token || req.headers.authorization.split(" ")[1];
+  const token =
+    req.cookies.token ||
+    (req.headers.authorization && req.headers.authorization.split(" ")[1]);
   await blackListTokenModel.create({ token });
   res.clearCookie("token");
   return res.status(200).json({ message: "Driver logged out successfully" });
