@@ -4,7 +4,7 @@ export const registerNewUser = async (data: {
   firstname: string;
   lastname: string;
   email: string;
-  password: string
+  password: string;
 }) => {
   try {
     const response = await makeApiCall<any>({
@@ -14,13 +14,16 @@ export const registerNewUser = async (data: {
     });
     return response;
   } catch (error: any) {
-    const backendMessage = error.response?.data?.message || "Failed to register user";
+    const backendMessage =
+      error.response?.data?.message || "Failed to register user";
     throw new Error(backendMessage);
   }
 };
 
-
-export const loginUser = async (credentials: { email: string; password: string }) => {
+export const loginUser = async (credentials: {
+  email: string;
+  password: string;
+}) => {
   try {
     const response = await makeApiCall<any>({
       url: "api/user/login",
@@ -30,6 +33,19 @@ export const loginUser = async (credentials: { email: string; password: string }
     return response;
   } catch (error: any) {
     const backendMessage = error.response?.data?.message || "Login Failed";
+    throw new Error(backendMessage);
+  }
+};
+
+export const logoutUser = async () => {
+  try {
+    const response = await makeApiCall<any>({
+      url: "api/user/logout",
+      method: "GET",
+    });
+    return response;
+  } catch (error: any) {
+    const backendMessage = error.response?.data?.message || "Logout Failed";
     throw new Error(backendMessage);
   }
 };

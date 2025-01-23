@@ -76,7 +76,7 @@ const DriverHome = () => {
             }}
           />
           <Link
-            to="/driver-home"
+            to="/driver-login"
             className="h-10 w-10 bg-white flex items-center justify-center rounded-full"
           >
             <RiLogoutCircleFill

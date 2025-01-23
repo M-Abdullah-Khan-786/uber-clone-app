@@ -9,6 +9,11 @@ import LookingForDriverPannel from "../components/LookingForDriverPannel";
 import WaitingForDriverPannel from "../components/WaitingForDriverPannel";
 import { getAutoCompleteSuggestions } from "../app/features/map/mapService";
 import { getFareEstimate } from "../app/features/ride/rideService";
+import { RiLogoutCircleFill } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
+import { logoutUser } from "../app/features/user/userService";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Home = () => {
   // State for managing panel visibility and form inputs
@@ -23,6 +28,8 @@ const Home = () => {
   const [waitingForDriverPannel, setWaitingForDriverPannel] = useState(false);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [fareEstimate, setFareEstimate] = useState<any>(null);
+
+  const navigate = useNavigate();
 
   // Refs for panel elements to control animations
   const panelRef = useRef(null);
@@ -147,11 +154,14 @@ const Home = () => {
   );
 
   // Triggered when "Confirm Location" is clicked
-  const findTrip = async() => {
+  const findTrip = async () => {
     setpanelOpen(false);
     setVehiclePanel(true);
     try {
-      const fareData = await getFareEstimate(formValues.pickup, formValues.dropooff);
+      const fareData = await getFareEstimate(
+        formValues.pickup,
+        formValues.dropooff
+      );
       setFareEstimate(fareData);
     } catch (error) {
       console.error("Error fetching fare estimate:", error);
@@ -164,14 +174,39 @@ const Home = () => {
     console.log("Form submitted!");
   };
 
+  const handleLogout = async () => {
+    try {
+      const response = await logoutUser();
+      if (response) {
+        localStorage.removeItem("token");
+        navigate("/user-login");
+        toast.success(response.message);
+      }
+    } catch (error: any) {
+      console.error(error);
+      toast.error(error.message);
+    }
+  };
+
   return (
     <>
       <div className="h-screen relative overflow-hidden">
-        <img
-          className="w-20 absolute left-5 top-5"
-          src="https://download.logo.wine/logo/Uber/Uber-Logo.wine.png"
-          alt=""
-        />
+        <div className="fixed p-6 top-0 z-[50] flex items-center justify-between w-screen">
+          <img
+            className="w-16"
+            src="https://download.logo.wine/logo/Uber/Uber-Logo.wine.png"
+            alt=""
+          />
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              handleLogout();
+            }}
+            className="h-10 w-10 bg-white flex items-center justify-center rounded-full"
+          >
+            <RiLogoutCircleFill className="text-2xl font-medium" />
+          </button>
+        </div>
         <div className="h-screen w-screen">
           <img
             className="object-cover h-full w-full"
