@@ -8,7 +8,7 @@ import ConfrirmVehiclePannel from "../components/ConfrirmVehiclePannel";
 import LookingForDriverPannel from "../components/LookingForDriverPannel";
 import WaitingForDriverPannel from "../components/WaitingForDriverPannel";
 import { getAutoCompleteSuggestions } from "../app/features/map/mapService";
-import { getFareEstimate } from "../app/features/ride/rideService";
+import { createRide, getFareEstimate } from "../app/features/ride/rideService";
 import { RiLogoutCircleFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../app/features/user/userService";
@@ -168,6 +168,21 @@ const Home = () => {
     }
   };
 
+  const handleCreateRide = async (vehicleType: any) => {
+    try {
+      const response = await createRide(
+        formValues.pickup,
+        formValues.dropooff,
+        vehicleType
+      );
+      if (response) {
+        toast.success(response.message);
+      }
+    } catch (error) {
+      console.error("Error creating ride:", error);
+    }
+  };
+
   // Form submission handler
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -289,6 +304,7 @@ const Home = () => {
             setConfirmVehiclePannel={setConfirmVehiclePannel}
             setVehiclePanel={setVehiclePanel}
             fareEstimate={fareEstimate}
+            handleCreateRide={handleCreateRide}
           />
         </div>
 

@@ -5,16 +5,27 @@ interface VehiclePannelProps {
   setVehiclePanel: React.Dispatch<React.SetStateAction<boolean>>;
   setConfirmVehiclePannel: React.Dispatch<React.SetStateAction<boolean>>;
   fareEstimate: any;
+  handleCreateRide: (vehicleType: string) => Promise<void>;
 }
 
 const VehiclePannel: React.FC<VehiclePannelProps> = ({
   setVehiclePanel,
   setConfirmVehiclePannel,
   fareEstimate,
+  handleCreateRide,
 }) => {
   const carFare = fareEstimate?.car || "0";
   const autoFare = fareEstimate?.auto || "0";
   const bikeFare = fareEstimate?.bike || "0";
+
+  const handleVehicleSelection = async (vehicleType: string) => {
+    try {
+      await handleCreateRide(vehicleType);
+      setConfirmVehiclePannel(true);
+    } catch (error) {
+      console.error("Error selecting vehicle:", error);
+    }
+  };
 
   return (
     <>
@@ -29,9 +40,7 @@ const VehiclePannel: React.FC<VehiclePannelProps> = ({
 
       <h3 className="text-2xl font-semibold mb-5">Choose your Drive</h3>
       <div
-        onClick={() => {
-          setConfirmVehiclePannel(true);
-        }}
+        onClick={() => handleVehicleSelection("car")}
         className="w-full mb-2 p-3 border-2 active:border-black bg-gray-100 rounded-xl flex justify-center ite"
       >
         <img
@@ -54,9 +63,7 @@ const VehiclePannel: React.FC<VehiclePannelProps> = ({
       </div>
 
       <div
-        onClick={() => {
-          setConfirmVehiclePannel(true);
-        }}
+        onClick={() => handleVehicleSelection("auto")}
         className="w-full mb-2 p-3 border-2 active:border-black bg-gray-100 rounded-xl flex justify-center ite"
       >
         <img
@@ -79,9 +86,7 @@ const VehiclePannel: React.FC<VehiclePannelProps> = ({
       </div>
 
       <div
-        onClick={() => {
-          setConfirmVehiclePannel(true);
-        }}
+        onClick={() => handleVehicleSelection("bike")}
         className="w-full mb-2 p-3 border-2 active:border-black bg-gray-100 rounded-xl flex justify-center ite"
       >
         <img
