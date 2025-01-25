@@ -28,6 +28,7 @@ const Home = () => {
   const [waitingForDriverPannel, setWaitingForDriverPannel] = useState(false);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [fareEstimate, setFareEstimate] = useState<any>(null);
+  const [vehicleType, setVehicleType] = useState<any>(null);
 
   const navigate = useNavigate();
 
@@ -168,7 +169,7 @@ const Home = () => {
     }
   };
 
-  const handleCreateRide = async (vehicleType: any) => {
+  const handleCreateRide = async () => {
     try {
       const response = await createRide(
         formValues.pickup,
@@ -304,7 +305,7 @@ const Home = () => {
             setConfirmVehiclePannel={setConfirmVehiclePannel}
             setVehiclePanel={setVehiclePanel}
             fareEstimate={fareEstimate}
-            handleCreateRide={handleCreateRide}
+            setVehicleType={setVehicleType}
           />
         </div>
 
