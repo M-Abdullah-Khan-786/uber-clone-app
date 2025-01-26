@@ -5,12 +5,20 @@ import { IoIosArrowDown } from "react-icons/io";
 
 interface confrirmVehiclePannelProps {
   setConfirmVehiclePannel: React.Dispatch<React.SetStateAction<boolean>>;
-  setLookingDriverPannel:  React.Dispatch<React.SetStateAction<boolean>>;
+  setLookingDriverPannel: React.Dispatch<React.SetStateAction<boolean>>;
+  vehicleType: any;
+  handleCreateRide: any;
+  fareEstimate: any;
+  formValues: any;
 }
 
 const ConfrirmVehiclePannel: React.FC<confrirmVehiclePannelProps> = ({
   setConfirmVehiclePannel,
-  setLookingDriverPannel
+  setLookingDriverPannel,
+  vehicleType,
+  handleCreateRide,
+  fareEstimate,
+  formValues,
 }) => {
   return (
     <>
@@ -36,28 +44,34 @@ const ConfrirmVehiclePannel: React.FC<confrirmVehiclePannelProps> = ({
             <FaLocationDot className="text-lg" />
             <div>
               <h3 className="text-lg font-medium">Address</h3>
-              <p className="text-sm text-gray-600">Example Address</p>
+              <p className="text-sm text-gray-600">{formValues.pickup}</p>
             </div>
           </div>
           <div className="flex items-center gap-5 p-3 border-b-2">
             <GrLocationPin className="text-lg" />
             <div>
               <h3 className="text-lg font-medium">Address</h3>
-              <p className="text-sm text-gray-600">Example Address</p>
+              <p className="text-sm text-gray-600">{formValues.dropooff}</p>
             </div>
           </div>
           <div className="flex items-center gap-5 p-3">
             <BsCash className="text-lg" />
             <div>
-              <h3 className="text-lg font-medium">Rs 220</h3>
+              <h3 className="text-lg font-medium">
+                Rs {fareEstimate[vehicleType]}
+              </h3>
               <p className="text-sm text-gray-600">Cash</p>
             </div>
           </div>
         </div>
-        <button onClick={()=>{
-          setLookingDriverPannel(true)
-          setConfirmVehiclePannel(false)
-        }} className="w-full bg-black text-white font-semibold rounded-lg p-3 mt-5">
+        <button
+          onClick={() => {
+            setLookingDriverPannel(true);
+            setConfirmVehiclePannel(false);
+            handleCreateRide();
+          }}
+          className="w-full bg-black text-white font-semibold rounded-lg p-3 mt-5"
+        >
           Confirm
         </button>
       </div>

@@ -317,6 +317,10 @@ const Home = () => {
           <ConfrirmVehiclePannel
             setConfirmVehiclePannel={setConfirmVehiclePannel}
             setLookingDriverPannel={setLookingDriverPannel}
+            handleCreateRide={handleCreateRide}
+            fareEstimate={fareEstimate}
+            vehicleType={vehicleType}
+            formValues={formValues}
           />
         </div>
 
