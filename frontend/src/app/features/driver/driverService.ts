@@ -47,3 +47,16 @@ export const logoutDriver = async () => {
     throw new Error(backendMessage);
   }
 };
+
+export const driverData = async () => {
+  try {
+    const response = await makeApiCall<any>({
+      url: "api/driver/profile",
+      method: "GET",
+    });
+    return response;
+  } catch (error: any) {
+    const backendMessage = error.response?.data?.message || "Profile Data Failed";
+    throw new Error(backendMessage);
+  }
+};
