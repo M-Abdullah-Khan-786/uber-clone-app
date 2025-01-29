@@ -44,21 +44,21 @@ const ConfrirmVehiclePannel: React.FC<confrirmVehiclePannelProps> = ({
             <FaLocationDot className="text-lg" />
             <div>
               <h3 className="text-lg font-medium">Address</h3>
-              <p className="text-sm text-gray-600">{formValues.pickup}</p>
+              <p className="text-sm text-gray-600">{formValues.pickup ?? "N/A"}</p>
             </div>
           </div>
           <div className="flex items-center gap-5 p-3 border-b-2">
             <GrLocationPin className="text-lg" />
             <div>
               <h3 className="text-lg font-medium">Address</h3>
-              <p className="text-sm text-gray-600">{formValues.dropooff}</p>
+              <p className="text-sm text-gray-600">{formValues.dropooff ?? "N/A"}</p>
             </div>
           </div>
           <div className="flex items-center gap-5 p-3">
             <BsCash className="text-lg" />
             <div>
               <h3 className="text-lg font-medium">
-                Rs {fareEstimate[vehicleType]}
+              Rs {vehicleType ? fareEstimate?.[vehicleType] ?? "N/A" : "N/A"}
               </h3>
               <p className="text-sm text-gray-600">Cash</p>
             </div>
