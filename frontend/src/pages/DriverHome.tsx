@@ -9,8 +9,11 @@ import ConfirmRidePopupPannel from "../components/ConfirmRidePopupPannel";
 import { logoutDriver } from "../app/features/driver/driverService";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useAppDispatch } from "../app/hook";
+import { resetDriver } from "../app/features/driver/driverSlice";
 
 const DriverHome = () => {
+    const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const [RidePopUPPanel, setRidePopUPPanel] = useState(true);
@@ -26,6 +29,7 @@ const DriverHome = () => {
         localStorage.removeItem("token");
         navigate("/driver-login");
         toast.success(response.message);
+        dispatch(resetDriver())
       }
     } catch (error: any) {
       console.error(error);

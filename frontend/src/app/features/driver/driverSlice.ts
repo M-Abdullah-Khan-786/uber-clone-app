@@ -103,7 +103,9 @@ export const loginExistingDriver = createAsyncThunk<
 const driverSlice = createSlice({
   name: "driver",
   initialState,
-  reducers: {},
+  reducers: {
+    resetDriver: () => initialState
+  },
   extraReducers: (builder) => {
     builder
       .addCase(createDriver.pending, (state) => {
@@ -159,4 +161,5 @@ const driverSlice = createSlice({
   },
 });
 
+export const { resetDriver } = driverSlice.actions;
 export default driverSlice.reducer;

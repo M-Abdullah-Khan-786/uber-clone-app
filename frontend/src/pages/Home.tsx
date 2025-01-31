@@ -14,8 +14,12 @@ import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../app/features/user/userService";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useAppDispatch } from "../app/hook";
+import { resetUser } from "../app/features/user/userSlice";
 
 const Home = () => {
+      const dispatch = useAppDispatch();
+
   // State for managing panel visibility and form inputs
   const [panelOpen, setpanelOpen] = useState(false);
   const [formValues, setformValues] = useState({
@@ -197,6 +201,7 @@ const Home = () => {
         localStorage.removeItem("token");
         navigate("/user-login");
         toast.success(response.message);
+        dispatch(resetUser())
       }
     } catch (error: any) {
       console.error(error);
