@@ -4,7 +4,7 @@ import { io, Socket } from "socket.io-client";
 const SOCKET_URL = import.meta.env.VITE_APP_API_BASE_URL;
 
 interface SocketContextType {
-  socket: Socket | null;
+  socket: Socket | any;
 }
 
 export const SocketContext = createContext<SocketContextType>({

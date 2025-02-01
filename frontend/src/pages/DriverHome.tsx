@@ -9,8 +9,10 @@ import ConfirmRidePopupPannel from "../components/ConfirmRidePopupPannel";
 import { logoutDriver } from "../app/features/driver/driverService";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useAppDispatch } from "../app/hook";
+import { useAppDispatch, useAppSelector } from "../app/hook";
 import { resetDriver } from "../app/features/driver/driverSlice";
+import { useEffect, useContext } from 'react'
+import { SocketContext } from '../context/socketContext'
 
 const DriverHome = () => {
     const dispatch = useAppDispatch();
@@ -21,6 +23,16 @@ const DriverHome = () => {
 
   const RidePopUPPanelRef = useRef(null);
   const confirmRidePopUPPanelRef = useRef(null);
+
+  const { socket } = useContext(SocketContext)
+  const {_id} = useAppSelector((state) => state.driver)
+  
+  useEffect(() => {
+    socket.emit('join', {
+        userId: _id,
+        userType: 'driver'
+    })
+}, [_id])
 
   const handleLogout = async () => {
     try {

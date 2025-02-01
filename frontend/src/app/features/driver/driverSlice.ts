@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { loginDriver, registerNewDriver } from "./driverService";
 
 interface DriverData {
+  _id: string |  null;
   firstname: string | null;
   lastname: string | null;
   email: string | null;
@@ -18,6 +19,7 @@ interface DriverData {
 }
 
 const initialState: DriverData = {
+  _id: null,
   firstname: null,
   lastname: null,
   email: null,
@@ -41,6 +43,7 @@ interface DriverResponse {
       lastname: string;
     };
     email: string;
+    _id: string;
   };
   token: string;
 }
@@ -48,6 +51,7 @@ interface DriverResponse {
 interface CreateDriverResponse {
   message: string;
   driver: {
+    _id: string;
     firstname: string;
     lastname: string;
     email: string;
@@ -116,6 +120,7 @@ const driverSlice = createSlice({
         createDriver.fulfilled,
         (state, action: PayloadAction<CreateDriverResponse>) => {
           state.status = "idle";
+          state._id = action.payload.driver._id;
           state.firstname = action.payload.driver.firstname;
           state.lastname = action.payload.driver.lastname;
           state.email = action.payload.driver.email;
@@ -144,6 +149,7 @@ const driverSlice = createSlice({
         loginExistingDriver.fulfilled,
         (state, action: PayloadAction<DriverResponse>) => {
           state.status = "idle";
+          state._id = action.payload.driver._id;
           state.firstname = action.payload.driver.fullname.firstname;
           state.lastname = action.payload.driver.fullname.lastname;
           state.email = action.payload.driver.email;
