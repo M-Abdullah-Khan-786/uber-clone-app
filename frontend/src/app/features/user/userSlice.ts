@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { loginUser, registerNewUser } from "./userService";
 
 interface userData {
+  _id: string |  null;
   firstname: string | null;
   lastname: string | null;
   email: string | null;
@@ -13,6 +14,7 @@ interface userData {
 }
 
 const initialState: userData = {
+  _id: null,
   firstname: null,
   lastname: null,
   email: null,
@@ -31,6 +33,7 @@ interface UserResponse {
       lastname: string;
     };
     email: string;
+    _id: string;
   };
   token: string;
 }
@@ -87,6 +90,7 @@ const userSlice = createSlice({
         createUser.fulfilled,
         (state, action: PayloadAction<userData>) => {
           state.status = "idle";
+          state._id = action.payload._id;
           state.firstname = action.payload.firstname;
           state.lastname = action.payload.lastname;
           state.email = action.payload.email;
@@ -108,6 +112,7 @@ const userSlice = createSlice({
         loginExistingUser.fulfilled,
         (state, action: PayloadAction<UserResponse>) => {
           state.status = "idle";
+          state._id = action.payload.user._id;
           state.firstname = action.payload.user.fullname.firstname;
           state.lastname = action.payload.user.fullname.lastname;
           state.email = action.payload.user.email;

@@ -14,9 +14,10 @@ import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../app/features/user/userService";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useAppDispatch } from "../app/hook";
+import { useAppDispatch , useAppSelector } from "../app/hook";
 import { resetUser } from "../app/features/user/userSlice";
-
+import { useEffect, useContext } from 'react'
+import { SocketContext } from '../context/socketContext'
 const Home = () => {
       const dispatch = useAppDispatch();
 
@@ -35,6 +36,16 @@ const Home = () => {
   const [vehicleType, setVehicleType] = useState<any>(null);
 
   const navigate = useNavigate();
+
+  const { socket } = useContext(SocketContext)
+  const {_id} = useAppSelector((state) => state.user)
+  
+  useEffect(() => {
+    socket.emit('join', {
+        userId: _id,
+        userType: 'user'
+    })
+}, [_id])
 
   // Refs for panel elements to control animations
   const panelRef = useRef(null);
