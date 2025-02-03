@@ -11,11 +11,11 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAppDispatch, useAppSelector } from "../app/hook";
 import { resetDriver } from "../app/features/driver/driverSlice";
-import { useEffect, useContext } from 'react'
-import { SocketContext } from '../context/socketContext'
+import { useEffect, useContext } from "react";
+import { SocketContext } from "../context/socketContext";
 
 const DriverHome = () => {
-    const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const [RidePopUPPanel, setRidePopUPPanel] = useState(true);
@@ -24,15 +24,29 @@ const DriverHome = () => {
   const RidePopUPPanelRef = useRef(null);
   const confirmRidePopUPPanelRef = useRef(null);
 
-  const { socket } = useContext(SocketContext)
-  const {_id} = useAppSelector((state) => state.driver)
-  
+  const { socket } = useContext(SocketContext);
+  const { _id } = useAppSelector((state) => state.driver);
+
   useEffect(() => {
-    socket.emit('join', {
-        userId: _id,
-        userType: 'driver'
-    })
-}, [_id])
+    socket.emit("join", {
+      userId: _id,
+      userType: "driver",
+    });
+    const updateLocation = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          socket.emit("update-location-driver", {
+            userId: _id,
+            location: {
+              ltd: position.coords.latitude,
+              lng: position.coords.longitude,
+            },
+          });
+        });
+      }
+    };
+    updateLocation();
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -41,7 +55,7 @@ const DriverHome = () => {
         localStorage.removeItem("token");
         navigate("/driver-login");
         toast.success(response.message);
-        dispatch(resetDriver())
+        dispatch(resetDriver());
       }
     } catch (error: any) {
       console.error(error);
