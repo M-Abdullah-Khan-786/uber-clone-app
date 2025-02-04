@@ -1,6 +1,6 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import userSlice from "./features/user/userSlice";
-import driverSlice from "./features/driver/driverSlice";
+import userSlice, { resetUser } from "./features/user/userSlice";
+import driverSlice, { resetDriver } from "./features/driver/driverSlice";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import { combineReducers } from "redux";
@@ -29,6 +29,13 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
+
+// ✅ Reset Redux Store When Logout Event is Triggered
+window.addEventListener("logout", () => {
+  persistor.purge(); // Clear persisted state
+  store.dispatch(resetUser()); // Reset user state
+  store.dispatch(resetDriver()); // Reset driver state
+});
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;

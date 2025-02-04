@@ -48,6 +48,7 @@ async function makeApiCall<T>({
   } catch (error: any) {
     if (error.response?.status === 403 ) {
       localStorage.removeItem("token");
+      window.dispatchEvent(new Event("logout"));
       window.location.href = "/user-login";
     }
     throw error;
