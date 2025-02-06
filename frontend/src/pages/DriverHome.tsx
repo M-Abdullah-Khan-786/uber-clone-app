@@ -20,6 +20,7 @@ const DriverHome = () => {
 
   const [RidePopUPPanel, setRidePopUPPanel] = useState(true);
   const [confirmRidePopUPPanel, setConfirmRidePopUPPanel] = useState(false);
+  const [rideData, setRideData] = useState(null);
 
   const RidePopUPPanelRef = useRef(null);
   const confirmRidePopUPPanelRef = useRef(null);
@@ -45,8 +46,16 @@ const DriverHome = () => {
         });
       }
     };
+    const locationInterval = setInterval(updateLocation, 10000);
     updateLocation();
+
+    return () => clearInterval(locationInterval);
   }, []);
+
+  socket.on("new-ride", (data: any) => {
+    setRideData(data);
+    setRidePopUPPanel(true);
+  });
 
   const handleLogout = async () => {
     try {
@@ -130,6 +139,7 @@ const DriverHome = () => {
           className="w-full fixed z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-14 "
         >
           <RidePopupPannel
+            rideData={rideData}
             setRidePopUPPanel={setRidePopUPPanel}
             setConfirmRidePopUPPanel={setConfirmRidePopUPPanel}
           />
