@@ -1,6 +1,7 @@
 **Uber Clone APP**
 
-**Frontend**
+
+**Frontend:**
 
 **React:** UI development.
 
@@ -14,7 +15,8 @@
 
 **Map Integration:** Google Maps API or Mapbox for real-time location tracking.
 
-**Backend**
+
+**Backend:**
 
 **Node.js & Express:** Backend server with REST APIs.
 
