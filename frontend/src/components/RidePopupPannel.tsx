@@ -5,14 +5,14 @@ import { IoIosArrowDown } from "react-icons/io";
 
 interface RidePopupPannelProps {
   setRidePopUPPanel: React.Dispatch<React.SetStateAction<boolean>>;
-  setConfirmRidePopUPPanel: React.Dispatch<React.SetStateAction<boolean>>;
   rideData: any;
+  handleAcceptRide: any;
 }
 
 const RidePopupPannel: React.FC<RidePopupPannelProps> = ({
   setRidePopUPPanel,
-  setConfirmRidePopUPPanel,
   rideData,
+  handleAcceptRide
 }) => {
   return (
     <>
@@ -71,8 +71,7 @@ const RidePopupPannel: React.FC<RidePopupPannelProps> = ({
           </button>
           <button
             onClick={() => {
-              setConfirmRidePopUPPanel(true);
-              setRidePopUPPanel(false);
+              handleAcceptRide()
             }}
             className="bg-black text-white font-semibold rounded-lg p-3 px-10"
           >

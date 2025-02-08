@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from "../app/hook";
 import { resetDriver } from "../app/features/driver/driverSlice";
 import { useEffect, useContext } from "react";
 import { SocketContext } from "../context/socketContext";
+import { confirmRide } from "../app/features/ride/rideService";
 
 const DriverHome = () => {
   const dispatch = useAppDispatch();
@@ -20,7 +21,7 @@ const DriverHome = () => {
 
   const [RidePopUPPanel, setRidePopUPPanel] = useState(true);
   const [confirmRidePopUPPanel, setConfirmRidePopUPPanel] = useState(false);
-  const [rideData, setRideData] = useState(null);
+  const [rideData, setRideData] = useState<any>(null);
 
   const RidePopUPPanelRef = useRef(null);
   const confirmRidePopUPPanelRef = useRef(null);
@@ -56,6 +57,22 @@ const DriverHome = () => {
     setRideData(data);
     setRidePopUPPanel(true);
   });
+
+  const handleAcceptRide = async () => {
+    try {
+      if (!rideData?._id) {
+        toast.error("Invalid ride data");
+        return;
+      }
+      await confirmRide(rideData._id);
+      toast.success("Ride has been confirmed");
+
+      setRidePopUPPanel(false);
+      setConfirmRidePopUPPanel(true);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleLogout = async () => {
     try {
@@ -141,7 +158,7 @@ const DriverHome = () => {
           <RidePopupPannel
             rideData={rideData}
             setRidePopUPPanel={setRidePopUPPanel}
-            setConfirmRidePopUPPanel={setConfirmRidePopUPPanel}
+            handleAcceptRide={handleAcceptRide}
           />
         </div>
         <div
