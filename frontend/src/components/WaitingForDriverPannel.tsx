@@ -5,10 +5,12 @@ import { IoIosArrowDown } from "react-icons/io";
 
 interface waitingForDriverPannelProps {
   setWaitingForDriverPannel: React.Dispatch<React.SetStateAction<boolean>>;
+  rideData: any;
 }
 
 const WaitingForDriverPannel: React.FC<waitingForDriverPannelProps> = ({
   setWaitingForDriverPannel,
+  rideData,
 }) => {
   return (
     <>
@@ -28,9 +30,16 @@ const WaitingForDriverPannel: React.FC<waitingForDriverPannelProps> = ({
           alt=""
         />
         <div className="text-right">
-          <h4 className="text-lg font-medium">Usman</h4>
-          <h3 className="text-xl font-semibold -mt-1 -mb-1">ABC-12A-1234</h3>
-          <p className="text-sm text-gray-600">WagonR</p>
+          <h4 className="text-lg font-medium">
+            {rideData?.driver.fullname.firstname}
+          </h4>
+          <h3 className="text-xl font-semibold -mt-1 -mb-1">
+            {rideData?.driver.vehicle.vehicleNumber}
+          </h3>
+          <p className="text-sm text-gray-600">
+            {rideData?.driver.vehicle.vehicleName}
+          </p>
+          <h1 className="text-lg font-semibold"> {rideData?.otp} </h1>
         </div>
       </div>
 
@@ -40,20 +49,20 @@ const WaitingForDriverPannel: React.FC<waitingForDriverPannelProps> = ({
             <FaLocationDot className="text-lg" />
             <div>
               <h3 className="text-lg font-medium">Address</h3>
-              <p className="text-sm text-gray-600">Example Address</p>
+              <p className="text-sm text-gray-600">{rideData?.pickup}</p>
             </div>
           </div>
           <div className="flex items-center gap-5 p-3 border-b-2">
             <GrLocationPin className="text-lg" />
             <div>
               <h3 className="text-lg font-medium">Address</h3>
-              <p className="text-sm text-gray-600">Example Address</p>
+              <p className="text-sm text-gray-600">{rideData?.destination}</p>
             </div>
           </div>
           <div className="flex items-center gap-5 p-3">
             <BsCash className="text-lg" />
             <div>
-              <h3 className="text-lg font-medium">Rs 220</h3>
+              <h3 className="text-lg font-medium">Rs {rideData?.fare} </h3>
               <p className="text-sm text-gray-600">Cash</p>
             </div>
           </div>

@@ -34,6 +34,7 @@ const Home = () => {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [fareEstimate, setFareEstimate] = useState<any>(null);
   const [vehicleType, setVehicleType] = useState<any>(null);
+  const [ rideData, setRideData ] = useState(null)
 
   const navigate = useNavigate();
 
@@ -46,6 +47,15 @@ const Home = () => {
         userType: 'user'
     })
 }, [_id])
+
+
+socket.on('ride-confirmed', (ride:any) => {
+
+
+  setLookingDriverPannel(false)
+  setWaitingForDriverPannel(true)
+  setRideData(ride)
+})
 
   // Refs for panel elements to control animations
   const panelRef = useRef(null);
@@ -357,6 +367,7 @@ const Home = () => {
         >
           <WaitingForDriverPannel
             setWaitingForDriverPannel={setWaitingForDriverPannel}
+            rideData={rideData}
           />
         </div>
       </div>
