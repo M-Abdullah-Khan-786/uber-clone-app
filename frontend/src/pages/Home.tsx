@@ -50,12 +50,17 @@ const Home = () => {
 
 
 socket.on('ride-confirmed', (ride:any) => {
-
-
   setLookingDriverPannel(false)
   setWaitingForDriverPannel(true)
   setRideData(ride)
 })
+
+
+socket.on('ride-started', (ride:any) => {
+  setWaitingForDriverPannel(false)
+  navigate('/riding', { state: { ride } })
+})
+
 
   // Refs for panel elements to control animations
   const panelRef = useRef(null);
