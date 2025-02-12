@@ -7,11 +7,13 @@ import { Link } from "react-router-dom";
 interface confirmRidePopupPannelProps {
   setRidePopUPPanel: React.Dispatch<React.SetStateAction<boolean>>;
   setConfirmRidePopUPPanel: React.Dispatch<React.SetStateAction<boolean>>;
+  rideData: any;
 }
 
 const ConfirmRidePopupPannel: React.FC<confirmRidePopupPannelProps> = ({
   setRidePopUPPanel,
-  setConfirmRidePopUPPanel
+  setConfirmRidePopUPPanel,
+  rideData
 }) => {
   return (
     <>
@@ -32,7 +34,7 @@ const ConfirmRidePopupPannel: React.FC<confirmRidePopupPannelProps> = ({
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5eW8OvSN4zaimWuFO2ff4Q-Es1FS8ajh4WA&s"
             alt=""
           />
-          <h2 className="text-lg font-medium">Usman</h2>
+          <h2 className="text-lg font-medium">{rideData?.user.fullname.firstname + " " + rideData?.user.fullname.lastname}</h2>
         </div>
         <h5 className="text-lg font-semibold">2.2 KM</h5>
       </div>
@@ -42,20 +44,20 @@ const ConfirmRidePopupPannel: React.FC<confirmRidePopupPannelProps> = ({
             <FaLocationDot className="text-lg" />
             <div>
               <h3 className="text-lg font-medium">Address</h3>
-              <p className="text-sm text-gray-600">Example Address</p>
+              <p className="text-sm text-gray-600">{rideData?.pickup}</p>
             </div>
           </div>
           <div className="flex items-center gap-5 p-3 border-b-2">
             <GrLocationPin className="text-lg" />
             <div>
               <h3 className="text-lg font-medium">Address</h3>
-              <p className="text-sm text-gray-600">Example Address</p>
+              <p className="text-sm text-gray-600">{rideData?.destination}</p>
             </div>
           </div>
           <div className="flex items-center gap-5 p-3">
             <BsCash className="text-lg" />
             <div>
-              <h3 className="text-lg font-medium">Rs 220</h3>
+              <h3 className="text-lg font-medium">Rs {rideData?.fare}</h3>
               <p className="text-sm text-gray-600">Cash</p>
             </div>
           </div>

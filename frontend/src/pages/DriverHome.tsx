@@ -166,6 +166,7 @@ const DriverHome = () => {
           className="w-full h-screen fixed z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-14 "
         >
           <ConfirmRidePopupPannel
+            rideData={rideData}
             setRidePopUPPanel={setRidePopUPPanel}
             setConfirmRidePopUPPanel={setConfirmRidePopUPPanel}
           />
