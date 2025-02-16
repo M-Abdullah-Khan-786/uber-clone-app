@@ -1,9 +1,12 @@
 import { BsCash } from "react-icons/bs";
 import { FaHome } from "react-icons/fa";
 import { GrLocationPin } from "react-icons/gr";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Riding = () => {
+  const location = useLocation();
+  const { ride } = location.state || {};
+
   return (
     <>
       <div className="h-screen">
@@ -28,11 +31,16 @@ const Riding = () => {
               alt=""
             />
             <div className="text-right">
-              <h4 className="text-lg font-medium">Usman</h4>
+              <h4 className="text-lg font-medium">
+                {ride?.driver.fullname.firstname}
+              </h4>
               <h3 className="text-xl font-semibold -mt-1 -mb-1">
-                ABC-12A-1234
+                {ride?.driver.vehicle.vehicleNumber}
               </h3>
-              <p className="text-sm text-gray-600">WagonR</p>
+              <p className="text-sm text-gray-600">
+                {" "}
+                {ride?.driver.vehicle.vehicleName}
+              </p>
             </div>
           </div>
 
@@ -42,13 +50,13 @@ const Riding = () => {
                 <GrLocationPin className="text-lg" />
                 <div>
                   <h3 className="text-lg font-medium">Address</h3>
-                  <p className="text-sm text-gray-600">Example Address</p>
+                  <p className="text-sm text-gray-600">{ride?.destination}</p>
                 </div>
               </div>
               <div className="flex items-center gap-5 p-3">
                 <BsCash className="text-lg" />
                 <div>
-                  <h3 className="text-lg font-medium">Rs 220</h3>
+                  <h3 className="text-lg font-medium">Rs {ride?.fare}</h3>
                   <p className="text-sm text-gray-600">Cash</p>
                 </div>
               </div>

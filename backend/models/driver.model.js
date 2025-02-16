@@ -46,6 +46,10 @@ const driverSchema = new mongoose.Schema({
         type:String,
         required: true
       },
+      vehicleName:{
+        type:String,
+        required: true
+      },
       vehicleCapacity:{
         type: Number,
         required: true,
