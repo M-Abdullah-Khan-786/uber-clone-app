@@ -2,16 +2,30 @@ import { BsCash } from "react-icons/bs";
 import { FaLocationDot } from "react-icons/fa6";
 import { GrLocationPin } from "react-icons/gr";
 import { IoIosArrowDown } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { endRide } from "../app/features/ride/rideService";
 
 interface FinishRidePannelProps {
   setFinishRidePanel: React.Dispatch<React.SetStateAction<boolean>>;
-  rideData: any
-  }
+  rideData: any;
+}
 const FinishRidePannel: React.FC<FinishRidePannelProps> = ({
   setFinishRidePanel,
-  rideData
+  rideData,
 }) => {
+  const navigate = useNavigate();
+
+  const handleEndRide = async () => {
+    try {
+      const response = await endRide(rideData._id);
+      if (response.status === 200) {
+        navigate("/driver-home");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <h5
@@ -31,7 +45,9 @@ const FinishRidePannel: React.FC<FinishRidePannelProps> = ({
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5eW8OvSN4zaimWuFO2ff4Q-Es1FS8ajh4WA&s"
             alt=""
           />
-          <h2 className="text-lg font-medium">{rideData?.user.fullname.firstname}</h2>
+          <h2 className="text-lg font-medium">
+            {rideData?.user.fullname.firstname}
+          </h2>
         </div>
         <h5 className="text-lg font-semibold">2.2 KM</h5>
       </div>
@@ -59,14 +75,17 @@ const FinishRidePannel: React.FC<FinishRidePannelProps> = ({
             </div>
           </div>
         </div>
-       <div className="mt-10 w-full">
-       <Link to="/driver-home" className="flex justify-center w-full bg-black text-white font-semibold rounded-lg p-3 mt-3">
-          Finish Ride!
-        </Link>
-       </div>
+        <div className="mt-10 w-full">
+          <button
+            onClick={handleEndRide}
+            className="flex justify-center w-full bg-black text-white font-semibold rounded-lg p-3 mt-3"
+          >
+            Finish Ride!
+          </button>
+        </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default FinishRidePannel
+export default FinishRidePannel;
