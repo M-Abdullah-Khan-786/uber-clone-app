@@ -14,12 +14,13 @@ import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../app/features/user/userService";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useAppDispatch , useAppSelector } from "../app/hook";
+import { useAppDispatch, useAppSelector } from "../app/hook";
 import { resetUser } from "../app/features/user/userSlice";
-import { useEffect, useContext } from 'react'
-import { SocketContext } from '../context/socketContext'
+import { useEffect, useContext } from "react";
+import { SocketContext } from "../context/socketContext";
+import LiveTracking from "../components/LiveTracking";
 const Home = () => {
-      const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
   // State for managing panel visibility and form inputs
   const [panelOpen, setpanelOpen] = useState(false);
@@ -34,33 +35,30 @@ const Home = () => {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [fareEstimate, setFareEstimate] = useState<any>(null);
   const [vehicleType, setVehicleType] = useState<any>(null);
-  const [ rideData, setRideData ] = useState(null)
+  const [rideData, setRideData] = useState(null);
 
   const navigate = useNavigate();
 
-  const { socket } = useContext(SocketContext)
-  const {_id} = useAppSelector((state) => state.user)
-  
+  const { socket } = useContext(SocketContext);
+  const { _id } = useAppSelector((state) => state.user);
+
   useEffect(() => {
-    socket.emit('join', {
-        userId: _id,
-        userType: 'user'
-    })
-}, [_id])
+    socket.emit("join", {
+      userId: _id,
+      userType: "user",
+    });
+  }, [_id]);
 
+  socket.on("ride-confirmed", (ride: any) => {
+    setLookingDriverPannel(false);
+    setWaitingForDriverPannel(true);
+    setRideData(ride);
+  });
 
-socket.on('ride-confirmed', (ride:any) => {
-  setLookingDriverPannel(false)
-  setWaitingForDriverPannel(true)
-  setRideData(ride)
-})
-
-
-socket.on('ride-started', (ride:any) => {
-  setWaitingForDriverPannel(false)
-  navigate('/riding', { state: { ride } })
-})
-
+  socket.on("ride-started", (ride: any) => {
+    setWaitingForDriverPannel(false);
+    navigate("/riding", { state: { ride } });
+  });
 
   // Refs for panel elements to control animations
   const panelRef = useRef(null);
@@ -227,7 +225,7 @@ socket.on('ride-started', (ride:any) => {
         localStorage.removeItem("token");
         navigate("/user-login");
         toast.success(response.message);
-        dispatch(resetUser())
+        dispatch(resetUser());
       }
     } catch (error: any) {
       console.error(error);
@@ -255,11 +253,7 @@ socket.on('ride-started', (ride:any) => {
           </button>
         </div>
         <div className="h-screen w-screen">
-          <img
-            className="object-cover h-full w-full"
-            src="https://i0.wp.com/www.medianama.com/wp-content/uploads/2018/06/Screenshot_20180619-112715.png.png?fit=493%2C383&ssl=1"
-            alt=""
-          />
+          <LiveTracking />
         </div>
 
         {/* Main panel */}
