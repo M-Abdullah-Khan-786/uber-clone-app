@@ -5,12 +5,13 @@ import FinishRidePannel from "../components/FinishRidePannel";
 import { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import LiveTracking from "../components/LiveTracking";
 
 const DriverRiding = () => {
   const [finishRidePanel, setFinishRidePanel] = useState(false);
   const finishRidePanelRef = useRef(null);
-  const location = useLocation()
-  const rideData = location.state?.ride
+  const location = useLocation();
+  const rideData = location.state?.ride;
 
   useGSAP(
     function () {
@@ -29,7 +30,7 @@ const DriverRiding = () => {
 
   return (
     <>
-      <div className="h-screen overflow-hidden">
+      <div className="h-screen relative flex flex-col justify-end">
         <div className="fixed p-6 top-0 flex items-center justify-between w-screen">
           <img
             className="w-16"
@@ -69,9 +70,12 @@ const DriverRiding = () => {
           className="w-full fixed z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-14"
         >
           <FinishRidePannel
-          rideData={rideData}
-          setFinishRidePanel={setFinishRidePanel}
+            rideData={rideData}
+            setFinishRidePanel={setFinishRidePanel}
           />
+        </div>
+        <div className="h-screen fixed w-screen top-0 z-[-1]">
+          <LiveTracking />
         </div>
       </div>
     </>
